@@ -1,7 +1,7 @@
 {
-  "name": "flatpickr",
+  "name": "@hairlesshobo/flatpickr-tooltip",
   "version": "4.6.2",
-  "description": "A lightweight, powerful javascript datetime picker",
+  "description": "A fork of flatpickr that has support for tooltips",
   "scripts": {
     "build": "run-s build:pre build:build build:types build:post",
     "build:pre": "rimraf dist",
@@ -60,14 +60,14 @@
   "types": "./dist/typings.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chmln/flatpickr.git"
+    "url": "git+https://github.com/hairlesshobo/flatpickr-tooltip.git"
   },
-  "author": "Gregory <gregory.mkv@gmail.com>",
+  "author": "Steve Cross <hairlesshobo@stevecross.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chmln/flatpickr/issues"
+    "url": "https://github.com/hairlesshobo/flatpickr-tooltip/issues"
   },
-  "homepage": "https://chmln.github.io/flatpickr",
+  "homepage": "https://github.com/hairlesshobo/flatpickr-tooltip",
   "keywords": [
     "javascript",
     "datetimepicker",
