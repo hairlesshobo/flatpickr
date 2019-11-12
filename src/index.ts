@@ -700,9 +700,10 @@ function FlatpickrInstance(
             "tooltip"
           );
 
-          tooltipElement.appendChild(
-            createElement<HTMLParagraphElement>("p", "", tooltip.label)
-          );
+          let tooltipLabelSpan = createElement<HTMLSpanElement>("span", "");
+          tooltipLabelSpan.innerHTML = tooltip.label;
+          
+          tooltipElement.appendChild(tooltipLabelSpan);
           tooltipElement.appendChild(createElement<HTMLElement>("i", ""));
           dayElement.appendChild(tooltipElement);
         }
