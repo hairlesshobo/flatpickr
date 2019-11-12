@@ -435,6 +435,9 @@ span.flatpickr-weekday
   align-items: flex-start;
   width $daysWidth
 
+  &:hover
+    overflow: visible;
+
   &:focus
     outline 0
 
@@ -560,6 +563,55 @@ span.flatpickr-weekday
   &.hidden
     visibility hidden
 
+  &.hasTooltip
+    text-decoration: overline alpha($dayForeground, 0.25) dashed
+
+  & .tooltip 
+    min-width:150px;
+    max-width:350px;
+    width: 200px;
+    top:-10px;
+    left:50%;
+    transform:translate(-50%, -100%);
+    padding:10px 20px;
+    color:#EEEEEE;
+    background-color:#444444;
+    font-weight:normal;
+    font-size:13px;
+    border-radius:8px;
+    position:absolute;
+    z-index:99999999;
+    box-sizing:border-box;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+    visibility:hidden; 
+    opacity:0; 
+    transition:opacity 0.1s;
+    line-height: 20px;
+    text-align: center;
+
+  &:hover .tooltip 
+    visibility: visible; 
+    opacity: 0.85;
+
+  & .tooltip i
+    position:absolute;
+    top:100%;
+    left:50%;
+    margin-left:-10px;
+    width:20px;
+    height:10px;
+    overflow:hidden;
+
+  & .tooltip i::after  
+    content:'';
+    position:absolute;
+    width:10px;
+    height:10px;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(45deg);
+    background-color:#444444;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+
 .rangeMode .flatpickr-day
   margin-top 1px
 
@@ -594,6 +646,9 @@ span.flatpickr-weekday
   display flex
   box-sizing border-box
   overflow: hidden;
+
+  &:hover
+    overflow: visible;
 
   if $noCalendarBorder is defined
     background $calendarBackground

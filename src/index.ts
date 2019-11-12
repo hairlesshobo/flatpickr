@@ -9,6 +9,7 @@ import {
   Hook,
   HookKey,
   HOOKS,
+  TooltipLabel,
 } from "./types/options";
 
 import { Locale, CustomLocale, key as LocaleKey } from "./types/locale";
@@ -683,6 +684,30 @@ function FlatpickrInstance(
       "aria-label",
       self.formatDate(date, self.config.ariaDateFormat)
     );
+
+    if (self.config.showTooltips == true) {
+      let dateToCheck = self.parseDate(date, undefined, true); // timeless
+
+      if (dateToCheck !== undefined) {
+        let tooltip = self.config.tooltips.find(ele => {
+          return dateToCheck!.getTime() == ele.date.getTime();
+        });
+
+        if (tooltip !== undefined) {
+          dayElement.classList.add("hasTooltip");
+          let tooltipElement = createElement<HTMLSpanElement>(
+            "span",
+            "tooltip"
+          );
+
+          tooltipElement.appendChild(
+            createElement<HTMLParagraphElement>("p", "", tooltip.label)
+          );
+          tooltipElement.appendChild(createElement<HTMLElement>("i", ""));
+          dayElement.appendChild(tooltipElement);
+        }
+      }
+    }
 
     if (
       className.indexOf("hidden") === -1 &&
@@ -1958,6 +1983,7 @@ function FlatpickrInstance(
       "static",
       "enableSeconds",
       "disableMobile",
+      "showTooltips",
     ];
 
     const userConfig = {
@@ -1981,6 +2007,13 @@ function FlatpickrInstance(
       get: () => self.config._disable,
       set: dates => {
         self.config._disable = parseDateRules(dates);
+      },
+    });
+
+    Object.defineProperty(self.config, "tooltips", {
+      get: () => self.config._tooltips,
+      set: dates => {
+        self.config._tooltips = parseTooltips(dates);
       },
     });
 
@@ -2454,6 +2487,29 @@ function FlatpickrInstance(
         return rule;
       })
       .filter(x => x) as DateLimit<Date>[]; // remove falsy values
+  }
+
+  function parseTooltips(arr: TooltipLabel[]): TooltipLabel<Date>[] {
+    return arr
+      .slice()
+      .map(rule => {
+        if (
+          rule &&
+          typeof rule === "object" &&
+          (rule as TooltipLabel).date &&
+          (rule as TooltipLabel).label
+        ) {
+          return {
+            date: self.parseDate(
+              (rule as TooltipLabel).date,
+              undefined,
+              false
+            ) as Date,
+            label: (rule as TooltipLabel).label,
+          };
+        }
+      })
+      .filter(x => x) as TooltipLabel<Date>[]; // remove falsy values
   }
 
   function setupDates() {

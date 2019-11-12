@@ -3,6 +3,7 @@ import { CustomLocale, key as LocaleKey, Locale } from "./locale";
 
 export type DateOption = Date | string | number;
 export type DateRangeLimit<D = DateOption> = { from: D; to: D };
+export type TooltipLabel<D = DateOption> = { date: D; label: string };
 export type DateLimit<D = DateOption> =
   | D
   | DateRangeLimit<D>
@@ -232,11 +233,16 @@ Use it along with "enableTime" to create a time picker. */
   /* Whether to display the current month name in shorthand mode, e.g. "Sep" instead "September" */
   shorthandCurrentMonth: boolean;
 
+  /* Whether custom-tooltips should be added to the calendar days */
+  showTooltips: boolean;
+
   /* Creates a wrapper to position the calendar. Use this if the input is inside a scrollable element */
   static: boolean;
 
   /* Sets the number of months to show */
   showMonths?: number;
+
+  tooltips: TooltipLabel[];
 
   /* Displays time picker in 24 hour mode without AM/PM selection when enabled.*/
   time_24hr: boolean;
@@ -253,6 +259,7 @@ export type Options = Partial<BaseOptions>;
 export interface ParsedOptions {
   _disable: DateLimit<Date>[];
   _enable: DateLimit<Date>[];
+  _tooltips: TooltipLabel<Date>[];
   _maxDate?: Date;
   _maxTime?: Date;
   _minDate?: Date;
@@ -315,6 +322,8 @@ export interface ParsedOptions {
   showMonths: number;
   static: boolean;
   time_24hr: boolean;
+  showTooltips: boolean;
+  tooltips: TooltipLabel<Date>[];
   weekNumbers: boolean;
   wrap: boolean;
 }
@@ -322,6 +331,8 @@ export interface ParsedOptions {
 export const defaults: ParsedOptions = {
   _disable: [],
   _enable: [],
+  _tooltips: [],
+  tooltips: [],
   allowInput: false,
   altFormat: "F j, Y",
   altInput: false,
@@ -399,4 +410,5 @@ export const defaults: ParsedOptions = {
   time_24hr: false,
   weekNumbers: false,
   wrap: false,
+  showTooltips: false,
 };
